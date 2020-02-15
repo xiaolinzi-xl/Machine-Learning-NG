@@ -3,6 +3,12 @@ import numpy as np
 
 class MyLinearRegression:
 
+    def fit_normal(self, X_train, y_train):
+        X_b = np.hstack([np.ones((len(X_train),1)),X_train])
+        # 正规方程解
+        w = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y_train)
+        return w
+
     def fit_gd(self, X_train, y_train, learning_rate=0.01, n_iters=1e4, epsilon=1e-8):
         # 损失函数
         def J(w, X, y):
@@ -27,5 +33,5 @@ class MyLinearRegression:
 
         X_b = np.hstack([np.ones((len(X_train), 1)), X_train])
         initial_w = np.zeros(X_b.shape[1])
-        self.w_ = gradient_descent(initial_w, X_b, y_train)
-        return self
+        w = gradient_descent(initial_w, X_b, y_train)
+        return w
